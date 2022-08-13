@@ -1,5 +1,5 @@
 const React = require("react");
-const Default = require("./default");
+const Default = require("./layouts/Default");
 
 function error404() {
   return (
