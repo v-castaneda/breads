@@ -21,4 +21,15 @@ breads.get("/:arrayIndex", (req, res) => {
   }
 });
 
+// CREATE
+breads.post("/", (req, res) => {
+  if (req.body.hasGlutten === "on") {
+    req.body.hasGlutten = "true";
+  } else {
+    req.body.hasGlutten = "false";
+  }
+  Bread.push(req.body);
+  res.redirect("/breads");
+});
+
 module.exports = breads;
