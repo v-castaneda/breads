@@ -18,22 +18,27 @@ breads.get("/new", (req, res) => {
 });
 
 // DELETE
-breads.delete("/:arrayIndex", (req, res) => {
-  Bread.splice(req.params.arrayIndex, 1);
-  res.status(303).redirect("/breads");
+breads.delete("/:indexArray", (req, res) => {
+  Bread.findByIdAndDelete(req.params.indexArray)
+  .then(deleteBread => {
+    console.log(deleteBread)
+    res.status(303).redirect("/breads");
+  })
 });
 
 // EDIT
 breads.get("/:indexArray/edit", (req, res) => {
-  res.render("edit", {
-    bread: Bread[req.params.indexArray],
-    index: req.params.indexArray,
-  });
+  Bread.findById(req.params.indexArray)
+  .then(foundBread => {
+    res.render("edit", {
+      bread: foundBread
+    });
+  })
 });
 
 // SHOW
-breads.get("/:arrayIndex", (req, res) => {
-  Bread.findById(req.params.arrayIndex)
+breads.get("/:indexArray", (req, res) => {
+  Bread.findById(req.params.indexArray)
     .then((foundBread) => {
       res.render("show", {
         bread: foundBread,
@@ -61,14 +66,17 @@ breads.post("/", (req, res) => {
 });
 
 // UPDATE
-breads.put("/:arrayIndex", (req, res) => {
+breads.put("/:indexArray", (req, res) => {
   if (req.body.hasGluten === "on") {
     req.body.hasGluten = true;
   } else {
     req.body.hasGluten = false;
   }
-  Bread[req.params.arrayIndex] = req.body;
-  res.redirect(`/breads/${req.params.arrayIndex}`);
+  Bread.findByIdAndUpdate(req.params.indexArray, req.body, {new: true})
+  .then(updatedBread => {
+    console.log(updatedBread)
+    res.redirect(`/breads/${req.params.indexArray}`);
+  })
 });
 
 module.exports = breads;
