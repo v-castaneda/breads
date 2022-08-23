@@ -40,6 +40,8 @@ breads.get("/:indexArray/edit", (req, res) => {
 breads.get("/:indexArray", (req, res) => {
   Bread.findById(req.params.indexArray)
     .then((foundBread) => {
+      const bakedBy = foundBread.getBakedBy()
+      console.log(bakedBy)
       res.render("show", {
         bread: foundBread,
       });
