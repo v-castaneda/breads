@@ -23,19 +23,6 @@ breads.get("/new", (req, res) => {
        })
 });
 
-// // in the new route
-// breads.get('/new', (req, res) => {
-//     Baker.find()
-//         .then(foundBakers => {
-//             res.render('new', {
-//                 bakers: foundBakers
-//             })
-//       })
-// })
-
-
-
-
 // DELETE
 breads.delete("/:indexArray", (req, res) => {
   Bread.findByIdAndDelete(req.params.indexArray)
