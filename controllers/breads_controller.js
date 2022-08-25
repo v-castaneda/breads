@@ -33,18 +33,23 @@ breads.delete("/:indexArray", (req, res) => {
 });
 
 // EDIT
-breads.get("/:indexArray/edit", (req, res) => {
-  Bread.findById(req.params.indexArray)
-  .then(foundBread => {
-    res.render("edit", {
-      bread: foundBread
-    });
-  })
-});
+breads.get('/:indexArray/edit', (req, res) => {
+  Baker.find()
+    .then(foundBakers => {
+        Bread.findById(req.params.indexArray)
+          .then(foundBread => {
+            res.render('edit', {
+                bread: foundBread, 
+                bakers: foundBakers 
+            })
+          })
+    })
+})
 
 // SHOW
 breads.get("/:indexArray", (req, res) => {
   Bread.findById(req.params.indexArray)
+    .populate('baker')
     .then((foundBread) => {
       const bakedBy = foundBread.getBakedBy()
       console.log(bakedBy)
